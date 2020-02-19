@@ -10,3 +10,8 @@ after_success:
   - docker build -t loisbn/multi-nginx ./nginx
   - docker build -t loisbn/multi-api ./api
   - docker build -t loisbn/multi-worker ./worker
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push loisbn/multi-client
+  - docker push loisbn/multi-nginx
+  - docker push loisbn/multi-api
+  - docker push loisbn/multi-worker
