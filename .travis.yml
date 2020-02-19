@@ -1,0 +1,12 @@
+sudo: required
+services:
+  - docker
+before_install:
+  - docker build -f ./client/Dockerfile.dev -t loisbn/fibonacci ./client
+script:
+  - docker container run -e CI=true --name fibonacciTest loisbn/fibonacci yarn test
+after_success:
+  - docker build -t loisbn/multi-client ./client
+  - docker build -t loisbn/multi-nginx ./nginx
+  - docker build -t loisbn/multi-api ./api
+  - docker build -t loisbn/multi-worker ./worker
